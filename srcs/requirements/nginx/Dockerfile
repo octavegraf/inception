@@ -1,4 +1,5 @@
-FROM debian:bookworm-slim
+FROM debian:12-slim
+# i use the slim version 
 
 RUN apt update
 RUN apt upgrade
