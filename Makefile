@@ -4,10 +4,10 @@ all					:
 	docker compose -f $(COMPOSE) build
 
 run					:
-	docker compose -f $(COMPOSE) up
+	docker compose -f $(COMPOSE) up --build
 
 stop				:
 	docker compose -f $(COMPOSE) down
 
-.PHONY				:	all clean fclean re run stop
+.PHONY				:	all run stop
 # .SILENT				:
