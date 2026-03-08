@@ -1,11 +1,23 @@
 services:
   nginx:
-    build: ./requirements/nginx
+    build:
+      context: ./requirements/nginx
+      args:
+        - DOMAIN=${DOMAIN}
+        - UID=${UID}
+        - SSL_COUNTRY=${SSL_COUNTRY}
+        - SSL_STATE=${SSL_STATE}
+        - SSL_LOCALITY=${SSL_LOCALITY}
+        - SSL_ORGANIZATION=${SSL_ORGANIZATION}
+        - SSL_ORGANIZATIONAL_UNIT=${SSL_ORGANIZATIONAL_UNIT}
     ports:
       - "443:443"
     container_name: nginx-inception
   mariadb:
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
+      args:
+        - DB_NAME=${DB_NAME}
     ports:
       - "3306:3306"
     container_name: mariadb-inception
