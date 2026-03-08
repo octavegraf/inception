@@ -1,5 +1,5 @@
 FROM debian:12-slim
-# i use the slim version 
+# i use the slim version bcause it is lighter and faster to build
 
 RUN apt update
 RUN apt upgrade
