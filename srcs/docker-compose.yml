@@ -17,8 +17,11 @@ services:
   mariadb:
     build:
       context: ./requirements/mariadb
-      args:
-        - DB_NAME=${DB_NAME}
+    environment:
+      - DB_NAME=${DB_NAME}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     container_name: mariadb-inception
