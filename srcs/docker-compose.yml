@@ -13,6 +13,7 @@ services:
     ports:
       - "443:443"
     container_name: nginx-inception
+    image: nginx
   mariadb:
     build:
       context: ./requirements/mariadb
@@ -21,3 +22,4 @@ services:
     ports:
       - "3306:3306"
     container_name: mariadb-inception
+    image: mariadb
