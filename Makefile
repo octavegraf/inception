@@ -10,5 +10,10 @@ run					:
 stop				:
 	docker compose -f $(COMPOSE) down
 
-.PHONY				:	all run stop
+clean				:
+	docker compose -f $(COMPOSE) down --remove-orphans
+
+fclean				:	clean
+	docker compose -f $(COMPOSE) down --rmi all --volumes
+.PHONY				:	all run stop clean fclean
 # .SILENT				:
