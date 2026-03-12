@@ -15,8 +15,8 @@ while ! mysqladmin ping --silent 2>/dev/null; do
 done
 
 mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
-mysql -u root -e "CREATE USER IF NOT EXISTS '${SQL_USER}'@'%' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-mysql -u root -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${SQL_USER}'@'%';"
+mysql -u root -e "CREATE USER IF NOT EXISTS '${DB_USER}'@'%' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
+mysql -u root -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO '${DB_USER}'@'%';"
 mysql -u root -e "FLUSH PRIVILEGES;"
 
 touch /var/lib/mysql/.inception_init

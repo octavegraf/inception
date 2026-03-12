@@ -19,10 +19,14 @@ services:
       context: ./requirements/mariadb
     environment:
       - DB_NAME=${DB_NAME}
-      - SQL_USER=${SQL_USER}
-      - SQL_PASSWORD=${SQL_PASSWORD}
-      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     container_name: mariadb-inception
     image: mariadb
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      
