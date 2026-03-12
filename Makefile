@@ -1,6 +1,7 @@
 SRC					=	srcs
 COMPOSE				=	$(addprefix $(SRC), /docker-compose.yml)
 all					:
+	./$(SRC)/secrets_init.sh
 	test -f $(SRC)/.env || mv $(SRC)/.env.example $(SRC)/.env
 	docker compose -f $(COMPOSE) build
 
