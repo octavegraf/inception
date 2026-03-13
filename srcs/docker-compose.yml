@@ -10,23 +10,100 @@ services:
         - SSL_LOCALITY=${SSL_LOCALITY}
         - SSL_ORGANIZATION=${SSL_ORGANIZATION}
         - SSL_ORGANIZATIONAL_UNIT=${SSL_ORGANIZATIONAL_UNIT}
+    networks:
+      - inception
     ports:
       - "443:443"
     container_name: nginx-inception
     image: nginx
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    restart: unless-stopped
   mariadb:
     build:
       context: ./requirements/mariadb
     environment:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-    ports:
-      - "3306:3306"
+    secrets:
+      - db_password
+      - db_root_password
+    networks:
+      - inception
+    expose:
+      - "3306"
     container_name: mariadb-inception
     image: mariadb
+    env_file:
+      - .env
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: unless-stopped
+
   wordpress:
     build:
       context: ./requirements/wordpress
-      
+    secrets:
+      - db_password
+      - auth_key
+      - secure_auth_key
+      - logged_in_key
+      - nonce_key
+      - auth_salt
+      - secure_auth_salt
+      - logged_in_salt
+      - nonce_salt
+    container_name: wordpress-inception
+    image: wordpress
+    networks:
+      - inception
+    expose:
+      - "9000"
+    env_file:
+      - .env
+    volumes:
+        - wordpress:/var/www/wordpress
+    restart: unless-stopped
+
+secrets:
+  db_password:
+    file: ../secrets/DB_PASSWORD.txt
+  db_root_password:
+    file: ../secrets/DB_ROOT_PASSWORD.txt
+  auth_key:
+    file: ../secrets/AUTH_KEY.txt
+  secure_auth_key:
+    file: ../secrets/SECURE_AUTH_KEY.txt
+  logged_in_key:
+    file: ../secrets/LOGGED_IN_KEY.txt
+  nonce_key:
+    file: ../secrets/NONCE_KEY.txt
+  auth_salt:
+    file: ../secrets/AUTH_SALT.txt
+  secure_auth_salt:
+    file: ../secrets/SECURE_AUTH_SALT.txt
+  logged_in_salt:
+    file: ../secrets/LOGGED_IN_SALT.txt
+  nonce_salt:
+    file: ../secrets/NONCE_SALT.txt
+
+networks:
+  inception:
+    driver: bridge
+
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './mariadb'
