@@ -1,9 +1,11 @@
 #!/bin/bash
 
-secrets=("secret1" "secret2" "secret3" "secret4" "secret5")
+secrets=("DB_PASSWORD" "DB_ROOT_PASSWORD" "AUTH_KEY" "SECURE_AUTH_KEY" "LOGGED_IN_KEY" "NONCE_KEY" "AUTH_SALT" "SECURE_AUTH_SALT" "LOGGED_IN_SALT" "NONCE_SALT")
+
+# https://api.wordpress.org/secret-key/1.1/salt/
 
 mkdir -p secrets
 
 for arg in "${secrets[@]}"; do
-	[ -f "secrets/$arg" ] || touch "secrets/$arg"
+	[ -f "secrets/$arg.txt" ] || touch "secrets/$arg.txt"
 done
