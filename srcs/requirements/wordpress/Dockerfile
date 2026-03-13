@@ -13,8 +13,11 @@ RUN chown -R root:root /var/www/wordpress
 # RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=${SSL_COUNTRY}/ST=${SSL_STATE}/L=${SSL_LOCALITY}/O=${SSL_ORGANIZATION}/OU=${SSL_ORGANIZATIONAL_UNIT}/CN=${DOMAIN}/UID=${UID}"
 
 COPY conf/php.conf /etc/php/8.2/fpm/pool.d/www.conf
+COPY conf/wordpress.conf /var/www/wordpress/wp-config.php
 
+COPY conf/init.sh /init.sh
+RUN chmod +x /init.sh
 # RUN chmod 755 /var/www/html
 # RUN chown -R www-data:www-data /var/www/html
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["./init.sh"]
