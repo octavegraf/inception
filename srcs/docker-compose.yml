@@ -19,8 +19,8 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/wordpress
-    restart: unless-stopped
+      - ~/volumes/wordpress:/var/www/wordpress
+    restart: on-failure
   mariadb:
     build:
       context: ./requirements/mariadb
@@ -40,7 +40,7 @@ services:
       - .env
     volumes:
       - mariadb:/var/lib/mysql
-    restart: unless-stopped
+    restart: on-failure
 
   wordpress:
     build:
@@ -64,8 +64,8 @@ services:
     env_file:
       - .env
     volumes:
-        - wordpress:/var/www/wordpress
-    restart: unless-stopped
+        - ~/volumes/wordpress:/var/www/wordpress
+    restart: on-failure
 
 secrets:
   db_password:
@@ -98,12 +98,13 @@ volumes:
   wordpress:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './wordpress'
+      type: none
+      o: bind
+      device: ~/ocgraf/data/wordpress
+
   mariadb:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: './mariadb'
+      type: none
+      o: bind
+      device: ~/ocgraf/data/mariadb
