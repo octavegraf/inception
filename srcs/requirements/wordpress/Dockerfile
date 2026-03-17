@@ -3,8 +3,12 @@ FROM debian:12-slim
 
 RUN apt update
 RUN apt upgrade
-RUN apt install -y wget php php-fpm php-mysql mariadb-client
+RUN apt install -y wget php php-fpm php-mysql mariadb-client curl
 # -y : yes to all questions
+
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 RUN wget https://wordpress.org/wordpress-6.9.2.tar.gz -P /usr/src
 RUN cd /usr/src && tar -xzf wordpress-6.9.2.tar.gz && rm wordpress-6.9.2.tar.gz
@@ -15,7 +19,5 @@ COPY conf/wordpress.conf /usr/src/wordpress/wp-config.php
 
 COPY conf/init.sh /init.sh
 RUN chmod +x /init.sh
-# RUN chmod 755 /var/www/html
-# RUN chown -R www-data:www-data /var/www/html
 
 CMD ["./init.sh"]

@@ -1,5 +1,7 @@
 services:
   nginx:
+    depends_on:
+        - wordpress
     build:
       context: ./requirements/nginx
       args:
@@ -19,7 +21,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/volumes/wordpress:/var/www/wordpress
+      - wordpress:/var/www/wordpress
     restart: on-failure
   mariadb:
     build:
@@ -45,6 +47,10 @@ services:
   wordpress:
     build:
       context: ./requirements/wordpress
+    environment:
+      - WP_SITE_TITLE=${WP_SITE_TITLE}
+      - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
     secrets:
       - db_password
       - auth_key
@@ -55,6 +61,7 @@ services:
       - secure_auth_salt
       - logged_in_salt
       - nonce_salt
+      - wp_admin_password
     container_name: wordpress-inception
     image: wordpress
     networks:
@@ -64,7 +71,7 @@ services:
     env_file:
       - .env
     volumes:
-        - ~/volumes/wordpress:/var/www/wordpress
+        - wordpress:/var/www/wordpress
     restart: on-failure
 
 secrets:
@@ -88,6 +95,8 @@ secrets:
     file: ../secrets/LOGGED_IN_SALT.txt
   nonce_salt:
     file: ../secrets/NONCE_SALT.txt
+  wp_admin_password:
+    file: ../secrets/WP_ADMIN_PASSWORD.txt
 
 networks:
   inception:
@@ -99,12 +108,12 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: ~/ocgraf/data/wordpress
+      o : bind
+      device: ~/data/wordpress
 
   mariadb:
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: ~/ocgraf/data/mariadb
+      o : bind
+      device: ~/data/mariadb

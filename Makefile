@@ -1,6 +1,6 @@
 SRC					=	srcs
 COMPOSE				=	$(addprefix $(SRC), /docker-compose.yml)
-VOLUMES				=	~/ocgraf/data/
+VOLUMES				=	$(HOME)/data
 all					:
 	./$(SRC)/secrets_init.sh
 	test -f $(SRC)/.env || cp $(SRC)/.env.example $(SRC)/.env
@@ -19,6 +19,6 @@ clean				:
 
 fclean				:	clean
 	docker compose -f $(COMPOSE) down --rmi all --volumes
-	rm -rf $(VOLUMES)
+	sudo rm -rf $(VOLUMES)
 .PHONY				:	all run stop clean fclean
 # .SILENT				:
