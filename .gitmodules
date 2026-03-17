@@ -1,0 +1,3 @@
+[submodule "srcs/requirements/bonus/resume-static/resume"]
+	path = srcs/requirements/bonus/resume-static/resume
+	url = https://github.com/octavegraf/cv

@@ -77,6 +77,18 @@ services:
     volumes:
         - wordpress:/var/www/wordpress
     restart: on-failure
+  resume-static:
+    build:
+      context: requirements/bonus/resume-static
+      dockerfile: Dockerfile
+    container_name: resume-static-inception
+    expose:
+      - "8080"
+    networks:
+      - inception
+    restart: on-failure
+    ports:
+      - "8080:8080"
 
 secrets:
   db_password:
