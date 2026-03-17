@@ -50,6 +50,7 @@ services:
     depends_on:
       - mariadb
     environment:
+      - DB_HOST=${DB_HOST}
       - DOMAIN=${DOMAIN}
       - WP_SITE_TITLE=${WP_SITE_TITLE}
       - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}

@@ -2,7 +2,7 @@ SRC					=	srcs
 COMPOSE				=	$(addprefix $(SRC), /docker-compose.yml)
 VOLUMES				=	$(HOME)/data
 all					:
-	./$(SRC)/secrets_init.sh
+	./$(SRC)/requirements/tools/secrets_init.sh
 	test -f $(SRC)/.env || cp $(SRC)/.env.example $(SRC)/.env
 	mkdir -p $(VOLUMES)/mariadb
 	mkdir -p $(VOLUMES)/wordpress
@@ -20,5 +20,7 @@ clean				:
 fclean				:	clean
 	docker compose -f $(COMPOSE) down --rmi all --volumes
 	sudo rm -rf $(VOLUMES)
-.PHONY				:	all run stop clean fclean
+
+re					:	fclean run
+.PHONY				:	all run stop clean fclean re
 # .SILENT				:
