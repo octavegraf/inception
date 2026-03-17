@@ -47,7 +47,10 @@ services:
   wordpress:
     build:
       context: ./requirements/wordpress
+    depends_on:
+      - mariadb
     environment:
+      - DOMAIN=${DOMAIN}
       - WP_SITE_TITLE=${WP_SITE_TITLE}
       - WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
