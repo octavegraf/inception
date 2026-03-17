@@ -3,7 +3,7 @@ FROM debian:12-slim
 
 RUN apt update
 RUN apt upgrade
-RUN apt install -y wget php php-fpm php-mysql mariadb-client curl
+RUN apt install -y wget php php-fpm php-mysql mariadb-client curl gettext
 # -y : yes to all questions
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -17,7 +17,7 @@ RUN chown -R root:root /usr/src/wordpress
 COPY conf/php.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY conf/wordpress.conf /usr/src/wordpress/wp-config.php
 
-COPY conf/init.sh /init.sh
+COPY tools/init.sh /init.sh
 RUN chmod +x /init.sh
 
 CMD ["./init.sh"]

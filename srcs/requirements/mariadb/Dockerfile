@@ -9,7 +9,7 @@ RUN apt install -y mariadb-server
 # -y : yes to all questions
 
 COPY conf/mariadb.conf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY conf/init.sh init.sh
+COPY tools/init.sh init.sh
 RUN chmod +x ./init.sh
 
 CMD ["./init.sh"]
