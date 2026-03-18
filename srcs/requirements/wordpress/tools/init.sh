@@ -23,7 +23,7 @@ WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 
 export DB_NAME DB_HOST DB_USER DB_PASSWORD AUTH_KEY SECURE_AUTH_KEY LOGGED_IN_KEY NONCE_KEY AUTH_SALT SECURE_AUTH_SALT LOGGED_IN_SALT NONCE_SALT DOMAIN
 
-# Using gettext instead of 
+# Using gettext instead of sed
 envsubst '$DB_NAME:$DB_HOST:$DB_USER:$DB_PASSWORD:$AUTH_KEY:$SECURE_AUTH_KEY:$LOGGED_IN_KEY:$NONCE_KEY:$AUTH_SALT:$SECURE_AUTH_SALT:$LOGGED_IN_SALT:$NONCE_SALT:$DOMAIN' < /usr/src/wordpress/wp-config.php > /var/www/wordpress/wp-config.php
 
 cd /var/www/wordpress
